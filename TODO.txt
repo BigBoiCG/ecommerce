@@ -1,0 +1,22 @@
+DONE :
+
+
+TO DO :
+- Générer la DB et les entités User et Produits (make User avant make Entity)
+- récupérer Izi Admin
+- Faire le CRUD Users et Produits
+- Page d'accueil avec affichage des Produits
+- Inscription (form de User décorrélé de l'ajout d'utilisateur en backend)/Connexion/Déconnexion
+- Réserver l'affichage du backend à l'admin
+- Ajout de produit dans le panier, création du panier
+- Commande depuis le panier final
+    . faire la table Commande avec les relations (1 produit = 1 commande)
+    . lors de la commande, modifier les stocks
+    . CRUD commande
+- Compte utilisateur avec affichage récapitulatif des commandes et affichage du statut
+- Mise en ligne
+    . lier au repo Git
+    . effacer l'ancienne appli dans Scalingo
+
+PROBLEMES :
+

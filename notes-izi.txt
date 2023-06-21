@@ -1,0 +1,25 @@
+- composer require admin / composer require admin:4.* : récupère le dossier
+    . si on veut retirer un bundle : composer remove nomDuBundle
+- make:admin:dashboard - Enter - Enter (balek des dossiers, juste retenir le nom) : crée la page d'accueil de Izi Admin
+    . ça ne fera des confettis que si on est connecté en tant qu'admin
+- make:admin:crud - Categorie (ici, pour l'exemple) - Enter - Enter : nous génère automatiquement, via Izi Admin, le crud pour les catégories
+    . le "admin" dans les commandes implique qu'on utilise les outils d'Izi Admin
+- on répète l'étape pour générer des Cruds pour chacune de 0.  entités
+    . tout ce beau processsus présuppose quand même qu'on ait de base des entités (donc une BDD avec des tables) et un système de connexion/déconnexion avec au moins un profil admin
+- check Option1 dans le Dashboard Controller sur la fonction
+    . commenter le return parent index initial 
+    . rajouter le construct avec UrlGenerator
+- si erreur (sur les Date Time), aller sur Xampp, cliquer sur Config, PHP.ini, chercher extension=intl et retirer le ";" devant. Ensuite, enregistrer les modifications et relancer Xampp
+    . si persiste, faire composer require symfony/intl
+- dans le doute, supprimer le dossier var/cache
+- sur le Dashboard, modifier les liens du Dashboard et la disposition du menu latéral de Izi Admin dans le configureMenuItems 
+- dans l'ArticleCrudController, décommenter la fonction configureFields pour pouvoir modifier les champs
+    . sur le AssociationField, ne pas renseigner le nom de l'entité mais le nom de la relation entre les tables, tel qu'indiqué dans l'entité
+    . j'ai arrêté de noter vers 12h à peu près. Bonne chance cependant
+- composer require orm-fixtures --dev fakerphp/faker : pour récupérer le bundle qui fait les fixtures
+- *insert 1h de bolossage de Priscillia par Vincent*
+ 
+ Création d'un service :
+ - obligatoire : ouverture de balise PHP, namespace
+ - modifier le $rs par $this->rs
+ - bien penser à intéger le service (sous son nom ClasseService) dans les fonctions où on veut intégrer le service
