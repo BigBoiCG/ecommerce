@@ -5,5 +5,31 @@
 {% block body %}
 
 <h1 class="text-center mt-4">MYSHOP</h1>
+<div class="d-flex row">
+{% for item in produits %}
+<div class="card mb-3 col-3 mx-auto">
+  <h3 class="card-header">{{ item.title }}</h3>
+  <div class="card-body">
+    <h5 class="card-title">{{ item.collection|capitalize }}</h5>
+    <h6 class="card-subtitle text-muted">{{ item.size|upper }}</h6>
+  </div>
+<img src="{{ asset('images/produit/' ~ item.image) }}" alt="" class="img-fluid">
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+    <rect width="100%" height="50px" fill="{{ item.color }}"></rect>
+  </svg>
+  <div class="card-body">
+    <p class="card-text">{{ item.description|striptags }}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item text-end">{{ item.price }} €</li>
+  </ul>
+  <div class="card-body">
+    <a href="{{ path('cart_add', {id: item.id}) }}" class="btn btn-info">Ajouter produit au panier</a>
+  </div>
+  <div class="card-footer text-muted">{{ item.createdAt|date('d/m/Y, H:i:s') }}</div>
+</div>
+  {% endfor %}
+</div>
+
 
 {% endblock %}

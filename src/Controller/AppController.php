@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,8 +10,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(): Response
+    public function index(ProduitRepository $repo): Response
     {
-        return $this->render('app/index.html.twig');
+        $produits = $repo->findAll();
+        $test = 'test';
+        return $this->render('app/index.html.twig', [
+            'produits' => $produits,
+            'test' => $test
+        ]);
     }
 }

@@ -1,0 +1,13 @@
+{% block _User_roles %}
+{# _Entity_propriété #}
+
+{% for role in field.value %}
+    {% if role == "ROLE_USER" %}
+        Membre
+    {% elseif role == "ROLE_ADMIN" %}
+        Admin
+    {% endif %}
+    
+{% endfor %}
+
+{% endblock %}
