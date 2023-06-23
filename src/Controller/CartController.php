@@ -84,7 +84,7 @@ class CartController extends AbstractController
          $session = $rs->getSession();
          $qt = $session->get('qt', 0);
          $cart = $session->get('cart', []);
-         if(!empty($cart[$id]) && $qt > 1)
+         if(!empty($cart[$id]) && $cart[$id] > 1)
          {
              $cart[$id]--;
              $qt--;
@@ -160,7 +160,7 @@ class CartController extends AbstractController
                 return $this->redirectToRoute('app_cart');     
             } else {
             $produit['product']->setStock($stock - $produit['quantity']);
-            $manager->persist($produit['product']);                
+            $manager->persist($produit['product']);                 
             }
             $manager->persist($commande);
             $manager->flush();                      

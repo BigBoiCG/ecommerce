@@ -86,6 +86,9 @@ class AppController extends AbstractController
     #[Route('/profile/delete/{id}', name: 'user_delete_commande')]
     public function userDeleteCommande(Commande $commande, EntityManagerInterface $manager): Response
     {
+        $quantite = $commande->getQuantite();
+        $stock = $commande->getProduit()->getStock();
+        $commande->getProduit()->setStock($stock + $quantite);
         $manager->remove($commande);
         $manager->flush();
         $this->addFlash(

@@ -38,8 +38,12 @@
                     <td>Livré</td>
 {% endif %}
                     <td>
-                        <a href="{{ path('user_commande_edit', {order: item.id}) }}" class="btn btn-warning">Modifier la quantité</a>
+                    {% if item.etat == 'encours' %}
+                        <a href="{{ path('user_commande_edit', {order: item.id}) }}" class="btn btn-warning">Modifier la quantité</a>                    
+                    {% endif %}
+                    {% if item.etat != 'livre' %}
                         <a href="{{ path('user_delete_commande', {id: item.id}) }}" class="btn btn-danger">Annuler commande</a>
+                    {% endif %}
                     </td>
                 </tr>
             {% endfor %}
