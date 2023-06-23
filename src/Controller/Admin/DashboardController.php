@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Membre;
 use App\Entity\Produit;
+use App\Entity\Commande;
 use Symfony\Component\HttpFoundation\Response;
 use App\Controller\Admin\ProduitCrudController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,6 +44,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::section('CRUDs'),
             MenuItem::linkToCrud('Produits', 'fas fa-shirt', Produit::class),
             MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', Membre::class),
+            MenuItem::linkToCrud('Commandes', 'fas fa-check-to-slot', Commande::class),
             MenuItem::section('Site'),
             MenuItem::linkToRoute('Retourner sur le site', 'fa fa-home', 'home'),
         ];

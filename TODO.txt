@@ -8,19 +8,22 @@ DONE :
 - gérer la sécurité (role hierarchy, renvoi si pas admin)
 - Ajout de produit dans le panier, création du panier
 - Suppression d'une ligne du panier
-
-TO DO :
 - Soustraction et addition directement dans le panier
-- Suppression totale du panier
 - Potites notifications du panier
+- Suppression totale du panier
 - Commande depuis le panier final
     . faire la table Commande avec les relations (1 produit = 1 commande)
     . lors de la commande, modifier les stocks
     . CRUD commande
+- Affichage des messages en session (connexion, déconnexion, inscription, objet ajouté, commande validée)
+
+
+TO DO :
 - Compte utilisateur avec affichage récapitulatif des commandes et affichage du statut
 - Mise en ligne
     . lier au repo Git 
     . effacer l'ancienne appli dans Scalingo
-
 ERREURS :
+- fields qui font tout foirer dans le CommandeCrudController
+
 

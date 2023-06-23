@@ -4,6 +4,11 @@
 
 {% block body %}
     <h1 class="text-center my-3">Votre panier</h1>
+{% for message in app.flashes('danger') %}
+    <div class="alert alert-danger text-center">
+        {{ message }}
+    </div>
+{% endfor %}
     {% if items %}
     <div class="container">
         <table class="table">
@@ -23,15 +28,25 @@
                         <td>{{ item.product.price }}</td>
                         <td>{{ item.quantity }}</td>
                         <td>{{ item.quantity * item.product.price }} €</td>
-                        <td><a href="{{ path('product_remove', {id: item.product.id}) }}" class="btn-sm btn-danger">X</a></td>
+                        <td>
+                            <a href="{{ path('in_cart_add', {id: item.product.id}) }}" class="btn btn-info">+</a>
+                            <a href="{{ path('in_cart_minus', {id: item.product.id}) }}" class="btn btn-success">-</a>
+                            <a href="{{ path('product_remove', {id: item.product.id}) }}" class="btn btn-danger">X</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
         <h5 class="text-end">Total : {{ total }} €</h5>
+        <a href="{{ path('delete_cart') }}" class="btn btn-danger">Supprimer le panier</a>
+    {% if app.user %}
+            <a href="{{ path('order') }}" class="btn btn-warning">Valider le panier</a>
+    {% else %}
+            <a href="{{ path('app_login') }}" class="btn btn-info">Connectez-vous pour commander</a>
+    {% endif %}
     </div>
     {% else %}
-        <p>Votre panier est vide ... N'hésitez pas à consommer pour nourrir l'appétit destructeur du grand capital !</p>    
+        <p class="text-center">Votre panier est vide ... N'hésitez pas à consommer pour nourrir l'appétit destructeur du grand capital !</p>    
     {% endif %}
 
 {% endblock %}
