@@ -4,6 +4,12 @@
 
 {% block body %}
 
+{% for message in app.flashes('danger') %}
+    <div class="alert alert-danger text-center">
+        {{ message }}
+    </div>
+{% endfor %}
+
 <div class="container">
 <h1 class="text-center mt-4">Mes commandes</h1>
     <table class="table table-striped">

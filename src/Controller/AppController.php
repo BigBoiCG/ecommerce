@@ -43,20 +43,37 @@ class AppController extends AbstractController
         $idMembre = $this->getUser('id');
         $commandes = $commandeRepo->findBy(['membre' => $idMembre], ['created_at' => 'DESC']);        
         $commande = $commandeRepo->findOneBy(['id' => $order]);
+        $quantite = $commande->getQuantite();
+
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
         $prixProduit = $commande->getProduit()->getPrice();
         
+        // dd($quantite);
+        
         if($form->isSubmitted() && $form->isValid())
         {
             
-            $quantite = $commande->getQuantite();
-            $commande->setMontant($quantite * $prixProduit);
+            $modif = $commande->getQuantite();
+            // dd($modif);
+            $diff = $modif - $quantite;
+            // dd($quantite, $modif, $diff);
+            $commande->setMontant($modif * $prixProduit);
+            $produit = $commande->getProduit();
+            $stock = $produit->getStock();
+            if ($stock < $diff){
+                $this->addFlash('danger','Modification annulée pour cause de stocks insuffisants');
+                return $this->redirectToRoute('profil_commandes');     
+            } else {
+            $produit->setStock($stock + ($diff * -1));
+            $manager->persist($produit);                
+            }
             $manager->persist($commande); 
             $manager->flush();
             $this->addFlash('success', 'Commande modifiée');
             return $this->redirectToRoute('home');
         }
+
 
 
         return $this->render('app/profile.html.twig', [
