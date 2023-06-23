@@ -16,13 +16,14 @@ DONE :
     . lors de la commande, modifier les stocks
     . CRUD commande
 - Affichage des messages en session (connexion, déconnexion, inscription, objet ajouté, commande validée)
-
+- Compte utilisateur avec affichage récapitulatif des commandes et affichage du statut
 
 TO DO :
-- Compte utilisateur avec affichage récapitulatif des commandes et affichage du statut
 - Mise en ligne
     . lier au repo Git 
     . effacer l'ancienne appli dans Scalingo
+- Gérer la modification du stock lorsque l'utilisateur modifie ou efface sa commande depuis son profil
+
 ERREURS :
 - fields qui font tout foirer dans le CommandeCrudController
 

@@ -41,7 +41,7 @@
         </li>
       </ul>
         {% if app.user %}
-            {# <a href="{{ path('profil_commandes', {id: app.user.id}) }}" class="btn btn-warning mx-2">Mes commandes</a> #}
+            <a href="{{ path('profil_commandes') }}" class="btn btn-warning mx-2">Mes commandes</a>
             <a href="{{ path('app_logout') }}" class="btn btn-danger mx-2">Déconnexion</a>
         {% else %}
             <a href="{{ path('app_register') }}" class="btn btn-success mx-2">Inscription</a>

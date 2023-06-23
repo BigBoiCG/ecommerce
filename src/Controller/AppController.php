@@ -2,10 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
+use App\Form\CommandeType;
 use App\Repository\ProduitRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\CommandeRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AppController extends AbstractController
 {
@@ -18,5 +23,57 @@ class AppController extends AbstractController
             'produits' => $produits,
             'test' => $test
         ]);
+    }
+
+    #[Route('/profile', name: 'profil_commandes')]
+    public function profilCommandes(CommandeRepository $repo): Response
+    {   
+        $idMembre = $this->getUser('id');
+        $commandes = $repo->findBy(['membre' => $idMembre], ['created_at' => 'DESC']);
+
+        return $this->render('app/profile.html.twig', [
+            'commandes' => $commandes,
+            "editMode" => null
+        ]);
+    }
+
+    #[Route('/profile/edit/{order}', name: 'user_commande_edit')]
+    public function userEditCommandes($order, CommandeRepository $commandeRepo, Request $request, EntityManagerInterface $manager): Response
+    {   
+        $idMembre = $this->getUser('id');
+        $commandes = $commandeRepo->findBy(['membre' => $idMembre], ['created_at' => 'DESC']);        
+        $commande = $commandeRepo->findOneBy(['id' => $order]);
+        $form = $this->createForm(CommandeType::class, $commande);
+        $form->handleRequest($request);
+        $prixProduit = $commande->getProduit()->getPrice();
+        
+        if($form->isSubmitted() && $form->isValid())
+        {
+            
+            $quantite = $commande->getQuantite();
+            $commande->setMontant($quantite * $prixProduit);
+            $manager->persist($commande); 
+            $manager->flush();
+            $this->addFlash('success', 'Commande modifiée');
+            return $this->redirectToRoute('home');
+        }
+
+
+        return $this->render('app/profile.html.twig', [
+            'commandes' => $commandes,
+            'editForm' => $form,
+            "editMode" => $commande->getId()!=null
+        ]);
+    }
+
+    #[Route('/profile/delete/{id}', name: 'user_delete_commande')]
+    public function userDeleteCommande(Commande $commande, EntityManagerInterface $manager): Response
+    {
+        $manager->remove($commande);
+        $manager->flush();
+        $this->addFlash(
+            'success',
+            'Commande supprimée'); 
+        return $this->redirectToRoute('home');
     }
 }

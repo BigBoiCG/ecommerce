@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<h1 class="text-center mt-4">Mes commandes</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date de la commande</th>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Montant de la commande</th>
+                <th>Etat de la commande</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in commandes %}
+                <tr>
+                    <td>{{ item.createdAt|date('d/m/Y, H:i:s') }}</td>
+                    <td>{{ item.produit.title }}</td>
+                    <td>{{ item.quantite}}</td>
+                    <td>{{ item.montant }} €</td>
+{% if item.etat == 'encours' %}
+                    <td>En cours de traitement</td>
+{% elseif item.etat == 'envoye' %}
+                     <td>Envoyé</td>
+{% else %}
+                    <td>Livré</td>
+{% endif %}
+                    <td>
+                        <a href="{{ path('user_commande_edit', {order: item.id}) }}" class="btn btn-warning">Modifier la quantité</a>
+                        <a href="{{ path('user_delete_commande', {id: item.id}) }}" class="btn btn-danger">Annuler commande</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if editMode %}
+<div class="container">
+    <h2 class="text-center mt-4">Modifier commande</h2>
+    {{ form_start(editForm) }}
+
+        <div class>{{ form_row(editForm.quantite) }}</div>
+        {# {{ form_row(editForm.date_heure_fin) }} #}
+
+    <div><button class="btn btn-success" type="submit">Enregistrer la modification</button></div>
+
+    {{ form_end(editForm) }}
+</div>
+{% endif %}
+
+
+
+
+{% endblock %}
